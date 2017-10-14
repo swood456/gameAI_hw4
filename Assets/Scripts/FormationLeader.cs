@@ -26,24 +26,16 @@ public class FormationLeader : MonoBehaviour {
         
         RaycastHit2D left_hit, right_hit;
 
-        //left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist);
-        //Debug.DrawLine(head.position, head.position + (transform.right + transform.up * whisker_delta) * raycast_dist,  Color.red);
+        left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist);
+        Debug.DrawLine(head.position, head.position + (transform.right + transform.up * whisker_delta) * raycast_dist,  Color.red);
 
         right_hit = Physics2D.Raycast(head.position, transform.right - transform.up * whisker_delta, raycast_dist);
         Debug.DrawLine(head.position, head.position + (transform.right - transform.up * whisker_delta) * raycast_dist, Color.cyan);
-        /*
+        
         if (left_hit || right_hit)
         {
             rotate_away(left_hit, right_hit);
-        }*/
-        /*
-        if(right_hit)
-        {
-            rot_left();
         }
-        */
-        if (false)
-        { }
         else
         {
             // rotate
@@ -69,12 +61,12 @@ public class FormationLeader : MonoBehaviour {
 
         if (!left_hit)
         {
-            rot_right();
+            rot_left();
             return;
         }
         if(!right_hit)
         {
-            rot_left();
+            rot_right();
             return;
         }
 
@@ -92,19 +84,15 @@ public class FormationLeader : MonoBehaviour {
     {
         print("rot left");
         Vector3 rot = transform.eulerAngles;
-        rot.z += Time.deltaTime * rotational_speed * 10;
+        rot.z += Time.deltaTime * rotational_speed * 100;
         transform.rotation = Quaternion.Euler(rot);
-        //rb.AddForce(transform.right * acceleration * -2);
-        //transform.eulerAngles = rot;
     }
 
     void rot_right()
     {
         print("rot right");
         Vector3 rot = transform.eulerAngles;
-        rot.z -= Time.deltaTime * rotational_speed;
-        //transform.eulerAngles = rot;
-        //rb.AddForce(transform.right * acceleration * -2);
+        rot.z -= Time.deltaTime * rotational_speed * 10;
         transform.rotation = Quaternion.Euler(rot);
     }
 

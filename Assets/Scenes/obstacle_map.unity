@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 441275006}
   - component: {fileID: 441275005}
   - component: {fileID: 441275004}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 493759888}
   - component: {fileID: 493759887}
   - component: {fileID: 493759886}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 736077049}
   - component: {fileID: 736077048}
   - component: {fileID: 736077047}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 904938659}
   - component: {fileID: 904938658}
   - component: {fileID: 904938657}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1230,7 +1230,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1101781073}
   - component: {fileID: 1101781074}
-  - component: {fileID: 1101781075}
   m_Layer: 0
   m_Name: Obstacle1
   m_TagString: Untagged
@@ -1281,26 +1280,6 @@ EdgeCollider2D:
   - {x: 0.2976589, y: 2.2179828}
   - {x: 0.31966856, y: 2.2396204}
   - {x: 0.31998658, y: -0.32006553}
---- !u!50 &1101781075
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1101781072}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1194458072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1290,7 @@ GameObject:
   - component: {fileID: 1194458075}
   - component: {fileID: 1194458074}
   - component: {fileID: 1194458073}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1367,11 +1346,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.89
+      value: -8.84
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.88
+      value: 3.65
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1379,19 +1358,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0.9526223
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.30415595
       objectReference: {fileID: 0}
     - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
       propertyPath: m_RootOrder
@@ -1402,6 +1381,10 @@ Prefab:
       propertyPath: cur_dest
       value: 
       objectReference: {fileID: 736077047}
+    - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 215.415
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
   m_IsPrefabParent: 0
@@ -1486,7 +1469,7 @@ GameObject:
   - component: {fileID: 1513118485}
   - component: {fileID: 1513118484}
   - component: {fileID: 1513118483}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1846,7 +1829,7 @@ GameObject:
   - component: {fileID: 1800497117}
   - component: {fileID: 1800497116}
   - component: {fileID: 1800497115}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1903,7 +1886,7 @@ GameObject:
   - component: {fileID: 1832938196}
   - component: {fileID: 1832938195}
   - component: {fileID: 1832938194}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2133,7 +2116,7 @@ GameObject:
   - component: {fileID: 2103568975}
   - component: {fileID: 2103568974}
   - component: {fileID: 2103568973}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DestTrigger (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
