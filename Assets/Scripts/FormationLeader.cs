@@ -6,6 +6,7 @@ public class FormationLeader : MonoBehaviour {
 
     public DestTrigger cur_dest;
     public float max_speed;
+    public float cur_max_speed;
     public float acceleration;
     public float rotational_speed;
 
@@ -18,7 +19,9 @@ public class FormationLeader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-	}
+        cur_max_speed = max_speed;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -47,13 +50,19 @@ public class FormationLeader : MonoBehaviour {
 
             // accelerate
             rb.AddForce(transform.right * acceleration);
-            if (rb.velocity.magnitude > max_speed)
+            if (rb.velocity.magnitude > cur_max_speed)
             {
-                rb.velocity = rb.velocity.normalized * max_speed;
+                rb.velocity = rb.velocity.normalized * cur_max_speed;
             }
         }
         
 	}
+
+    public void slowdown_leader(float mult)
+    {
+        cur_max_speed = max_speed * mult;
+    }
+
 
     void rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
     {

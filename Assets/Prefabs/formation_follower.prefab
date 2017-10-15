@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dest: {x: 0, y: 0}
+  acceleration: 1
+  max_speed: 1
 --- !u!212 &212407897365909116
 SpriteRenderer:
   m_ObjectHideFlags: 1

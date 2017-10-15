@@ -7,9 +7,15 @@ public class FormationManager : MonoBehaviour {
     //Vector2[]
     public float group_scalar = 2.0f;
     public List<FormationMember> members;
+    public FormationLeader leader;
 
 	// Use this for initialization
 	void Start () {
+        setup_members();
+    }
+
+    private void Update()
+    {
         setup_members();
     }
 
@@ -28,16 +34,35 @@ public class FormationManager : MonoBehaviour {
         Vector2[] member_pos = new Vector2[num_members];
 
         // for now assume circle shape
-
         float group_radius = Mathf.Sqrt(group_scalar * num_members / Mathf.PI);
-        for(int i = 0; i < num_members; ++i)
+
+        Vector2 mid = leader.transform.position - leader.transform.right * group_radius;
+
+        // update the leader's velocity based on members dist from center
+        float dist_total = 0.0f;
+
+        for (int i = 1; i <= num_members; ++i)
         {
             // place the agents at positions along the circle
             Vector2 agent_pos;
-            agent_pos.x = Mathf.Cos(2 * Mathf.PI * ((float)i / num_members)) * group_radius;
-            agent_pos.y = Mathf.Sin(2 * Mathf.PI * ((float)i / num_members)) * group_radius;
-            member_pos[i] = agent_pos;
+            agent_pos.x = Mathf.Cos(2 * Mathf.PI * ((float)i / (num_members + 1))) * group_radius + mid.x;
+            agent_pos.y = Mathf.Sin(2 * Mathf.PI * ((float)i / (num_members + 1))) * group_radius + mid.y;
+            member_pos[i-1] = agent_pos;
+
+            //dist_total += members[i-1].transform;
+            dist_total += ((Vector2)members[i-1].transform.position - mid).magnitude;
         }
+
+        float avg_dist = dist_total / num_members;
+        if(avg_dist > group_radius)
+        {
+            leader.slowdown_leader(group_radius / avg_dist);
+        }
+        else
+        {
+            leader.slowdown_leader(avg_dist / group_radius);
+        }
+        
 
         return member_pos;
     }
@@ -47,4 +72,7 @@ public class FormationManager : MonoBehaviour {
         members.Remove(f);
         setup_members();
     }
+
+    
+
 }
