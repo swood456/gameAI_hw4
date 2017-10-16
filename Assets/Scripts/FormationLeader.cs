@@ -9,6 +9,7 @@ public class FormationLeader : MonoBehaviour {
     public float cur_max_speed;
     public float acceleration;
     public float rotational_speed;
+    public float avoid_rot_speed;
 
     public Transform head;
     public float raycast_dist;
@@ -25,7 +26,7 @@ public class FormationLeader : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        //rot_left();
         
         RaycastHit2D left_hit, right_hit;
 
@@ -41,12 +42,21 @@ public class FormationLeader : MonoBehaviour {
         }
         else
         {
-            // rotate
-            Vector2 _direction = (cur_dest.transform.position - transform.position).normalized;
-            float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+            // try a second, longer raycast for turning?
+            RaycastHit2D long_left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist + 0.25f);
+            RaycastHit2D long_right_hit = Physics2D.Raycast(head.position, transform.right - transform.up * whisker_delta, raycast_dist + 0.25f);
 
-            float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
-            transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+            if(!long_left_hit && !long_right_hit)
+            {
+                // rotate
+                Vector2 _direction = (cur_dest.transform.position - transform.position).normalized;
+                float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+
+                float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
+                //float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+            }
+            
 
             // accelerate
             rb.AddForce(transform.right * acceleration);
@@ -81,11 +91,13 @@ public class FormationLeader : MonoBehaviour {
 
         if(left_hit.distance < right_hit.distance)
         {
-            rot_left();
+            //rot_left();
+            rot_right();
         }
         else
         {
-            rot_right();
+            //rot_right();
+            rot_left();
         }
     }
     
@@ -93,7 +105,7 @@ public class FormationLeader : MonoBehaviour {
     {
         print("rot left");
         Vector3 rot = transform.eulerAngles;
-        rot.z += Time.deltaTime * rotational_speed * 100;
+        rot.z += Time.deltaTime * avoid_rot_speed;
         transform.rotation = Quaternion.Euler(rot);
     }
 
@@ -101,7 +113,7 @@ public class FormationLeader : MonoBehaviour {
     {
         print("rot right");
         Vector3 rot = transform.eulerAngles;
-        rot.z -= Time.deltaTime * rotational_speed * 10;
+        rot.z -= Time.deltaTime * avoid_rot_speed;
         transform.rotation = Quaternion.Euler(rot);
     }
 
