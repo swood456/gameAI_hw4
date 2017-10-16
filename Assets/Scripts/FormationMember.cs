@@ -35,4 +35,9 @@ public class FormationMember : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
+
+    private void emergDest()
+    {
+
+    }
 }

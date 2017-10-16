@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class FormationManager : MonoBehaviour {
 
-    //Vector2[]
     public float group_scalar = 2.0f;
-    public List<FormationMember> members;
     public FormationLeader leader;
+    public List<FormationMember> members;
+
 
 	// Use this for initialization
 	void Start () {
+        foreach (FormationMember child in GetComponentsInChildren<FormationMember>())
+        {
+            members.Add(child);
+        }
         setup_members();
     }
 
@@ -67,12 +71,33 @@ public class FormationManager : MonoBehaviour {
         return member_pos;
     }
 
+    /* this is mostly unfinished
+    public void assignMembers(Vector2[] pos)
+    {
+        List<FormationMember> rem = members;
+        foreach (Vector2 p in pos)
+        {
+            FormationMember bestFit;
+            float bestDist = Mathf.Infinity;
+            foreach(FormationMember m in rem)
+            {
+                float dist = Vector2.Distance(p, m.transform.position);
+                if (dist < bestDist)
+                {
+                    bestFit = m;
+                    bestDist = dist;
+                }
+
+                bestFit.dest = 
+            }
+        }
+    }
+    */
+
     public void RemoveAgent(FormationMember f)
     {
         members.Remove(f);
         setup_members();
-    }
-
-    
+    }   
 
 }
