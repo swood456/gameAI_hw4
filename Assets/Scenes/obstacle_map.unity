@@ -1293,13 +1293,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4526333542211474, guid: a2616e4e55442b646864f88b966004ee, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114938615224135580, guid: a2616e4e55442b646864f88b966004ee,
         type: 2}
       propertyPath: next_target
       value: 
-      objectReference: {fileID: 1731186938}
+      objectReference: {fileID: 1247179513}
     - target: {fileID: 58756192073832704, guid: a2616e4e55442b646864f88b966004ee,
         type: 2}
       propertyPath: m_Radius
@@ -1424,25 +1424,6 @@ Prefab:
       propertyPath: cur_dest
       value: 
       objectReference: {fileID: 736077047}
-    - target: {fileID: 4588935345666190, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 192.913
-      objectReference: {fileID: 0}
-    - target: {fileID: 114748659991790934, guid: 24372ce5220a5134d905f943e5ea2e39,
-        type: 2}
-      propertyPath: max_speed
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114748659991790934, guid: 24372ce5220a5134d905f943e5ea2e39,
-        type: 2}
-      propertyPath: acceleration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114748659991790934, guid: 24372ce5220a5134d905f943e5ea2e39,
-        type: 2}
-      propertyPath: whisker_delta
-      value: 0.25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}
   m_IsPrefabParent: 0
@@ -1616,7 +1597,7 @@ Prefab:
         type: 2}
       propertyPath: next_target
       value: 
-      objectReference: {fileID: 509721793}
+      objectReference: {fileID: 1731186938}
     - target: {fileID: 58756192073832704, guid: a2616e4e55442b646864f88b966004ee,
         type: 2}
       propertyPath: m_Radius
@@ -2262,13 +2243,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4526333542211474, guid: a2616e4e55442b646864f88b966004ee, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114938615224135580, guid: a2616e4e55442b646864f88b966004ee,
         type: 2}
       propertyPath: next_target
       value: 
-      objectReference: {fileID: 1247179513}
+      objectReference: {fileID: 509721793}
     - target: {fileID: 58756192073832704, guid: a2616e4e55442b646864f88b966004ee,
         type: 2}
       propertyPath: m_Radius
@@ -2276,7 +2257,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1893342175353094, guid: a2616e4e55442b646864f88b966004ee, type: 2}
       propertyPath: m_Name
-      value: DestTrigger (1.5)
+      value: DestTrigger (0.5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2616e4e55442b646864f88b966004ee, type: 2}
