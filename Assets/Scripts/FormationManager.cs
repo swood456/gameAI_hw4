@@ -63,10 +63,11 @@ public class FormationManager : MonoBehaviour {
         {
             // place the agents at positions along the circle
             Vector2 agent_pos;
-            agent_pos.x = Mathf.Cos(2 * Mathf.PI * ((float)i / (num_members + 1))) * group_radius + mid.x;
-            agent_pos.y = Mathf.Sin(2 * Mathf.PI * ((float)i / (num_members + 1))) * group_radius + mid.y;
+            agent_pos.x = Mathf.Cos(2 * Mathf.PI * ((float)i / (num_members + 1)) + Mathf.PI) * group_radius + mid.x;
+            agent_pos.y = Mathf.Sin(2 * Mathf.PI * ((float)i / (num_members + 1)) + Mathf.PI) * group_radius + mid.y;
 
             member_pos.Add(agent_pos);
+            //members[i-1].dest = agent_pos;
 
             //dist_total += members[i-1].transform;
             //dist_total += ((Vector2)members[i-1].transform.position - mid).magnitude;
