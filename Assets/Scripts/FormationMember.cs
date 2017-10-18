@@ -25,14 +25,14 @@ public class FormationMember : MonoBehaviour {
 
     private void Move()
     {
-        transform.position = dest;
+        //transform.position = dest;
 
-        //rb.AddForce(dest - rb.position);
-        //if (rb.velocity.magnitude > max_speed)
-        //{
-        //    rb.velocity.Normalize();
-        //    rb.velocity *= max_speed;
-        //}
+        rb.AddForce(dest - rb.position);
+        if (rb.velocity.magnitude > max_speed)
+        {
+            rb.velocity.Normalize();
+            rb.velocity *= max_speed;
+        }
     }
 
     //    //transform.position = dest;

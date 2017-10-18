@@ -76,7 +76,7 @@ public class FormationLeader : MonoBehaviour {
 
     void rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
     {
-        print("rotating away, left: " + left_hit.distance + " right : " + right_hit.distance);
+        //print("rotating away, left: " + left_hit.distance + " right : " + right_hit.distance);
 
         if (!left_hit)
         {
@@ -103,7 +103,7 @@ public class FormationLeader : MonoBehaviour {
     
     void rot_left()
     {
-        print("rot left");
+        //print("rot left");
         Vector3 rot = transform.eulerAngles;
         rot.z += Time.deltaTime * avoid_rot_speed;
         transform.rotation = Quaternion.Euler(rot);
@@ -111,7 +111,7 @@ public class FormationLeader : MonoBehaviour {
 
     void rot_right()
     {
-        print("rot right");
+        //print("rot right");
         Vector3 rot = transform.eulerAngles;
         rot.z -= Time.deltaTime * avoid_rot_speed;
         transform.rotation = Quaternion.Euler(rot);

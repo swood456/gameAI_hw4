@@ -53,8 +53,7 @@ public class FormationManager : MonoBehaviour {
         // for now assume circle shape
         float group_radius = Mathf.Sqrt(group_scalar * num_members / Mathf.PI);
 
-        Vector2 mid = leader.transform.position - leader.transform.right * group_radius;
-        print("right =" + leader.transform.right + " mid = " + mid);
+        Vector2 mid = -leader.transform.right * group_radius;
 
         // update the leader's velocity based on members dist from center
         //float dist_total = 0.0f;
@@ -67,7 +66,6 @@ public class FormationManager : MonoBehaviour {
             agent_pos.y = Mathf.Sin(2 * Mathf.PI * ((float)i / (num_members + 1)) + Mathf.PI) * group_radius + mid.y;
 
             member_pos.Add(agent_pos);
-            //members[i-1].dest = agent_pos;
 
             //dist_total += members[i-1].transform;
             //dist_total += ((Vector2)members[i-1].transform.position - mid).magnitude;
@@ -83,10 +81,10 @@ public class FormationManager : MonoBehaviour {
         //    leader.slowdown_leader(avg_dist / group_radius);
         //}
 
-        assignMembers(member_pos);
+        assignMembers(member_pos, mid);
     }
 
-    public void assignMembers(List<Vector2> s)
+    public void assignMembers(List<Vector2> s, Vector2 mid)
     {
         foreach (FormationMember m in members)
         {
@@ -94,7 +92,7 @@ public class FormationManager : MonoBehaviour {
             float bestDist = Mathf.Infinity;
             foreach(Vector2 t in s)
             {
-                float dist = Vector2.Distance(t, m.transform.position);
+                float dist = Vector2.Distance(t + mid, m.transform.position);
                 if (dist < bestDist)
                 {
                     bestFit = t;
