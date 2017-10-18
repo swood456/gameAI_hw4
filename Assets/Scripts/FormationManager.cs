@@ -13,12 +13,50 @@ public struct Slot
     }
 }
 
+public struct EmergentNode
+{
+    public GameObject node;
+    public GameObject following;
+    public bool right;
+
+    public GameObject leftFollower;
+    public GameObject rightFollower;
+
+    public bool Full()
+    {
+        return (leftFollower == null || rightFollower == null);
+    }
+
+    public void Follow(GameObject f)
+    {
+        int check = f.GetComponent<EmergentNode>().AddFollower(node);
+        if (check == 0) { right = true; following = f; }
+        else if (check == 1) { right = false; following = f; }
+    }
+
+    public int AddFollower(GameObject f)
+    {
+        if (rightFollower == null)
+        {
+            rightFollower = f;
+            return 0;
+        }
+        else if (leftFollower == null)
+        {
+            leftFollower = f;
+            return 1;
+        }
+        return 2;
+    }
+}
+
 public class FormationManager : MonoBehaviour {
 
     public float group_scalar = 2.0f;
     public FormationLeader leader;
     public List<FormationMember> members;
     public List<Slot> slots;
+    bool emergent = false;
 
 
 	// Use this for initialization
@@ -34,10 +72,38 @@ public class FormationManager : MonoBehaviour {
 
     private void Update()
     {
-        Vector2 lead = leader.transform.position;
-        foreach (Slot mem in slots)
+        if (emergent != true)
         {
-            mem.Set(lead);
+            Vector2 lead = leader.transform.position;
+            foreach (Slot mem in slots)
+            {
+                mem.Set(lead);
+            }
+        }
+        else
+        {
+            foreach (FormationMember f in members)
+            {
+                if (f.node.following == null)
+                {
+                    GameObject toFollow = null;
+                    float dist = Mathf.Infinity;
+
+                    foreach(GameObject m in GetComponentsInChildren<GameObject>())
+                    {
+                        EmergentNode n = m.GetComponent<EmergentNode>();
+                        if (m != f && n.Full() == false && Vector3.Distance(m.transform.position, f.transform.position) < dist) {
+                            dist = Vector3.Distance(m.transform.position, f.transform.position);
+                            toFollow = m;
+                        }
+                    }
+
+                    if (toFollow != null)
+                    {
+                        f.node.Follow(toFollow);
+                    }
+                }
+            }
         }
     }
 

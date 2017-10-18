@@ -12,9 +12,12 @@ public class FormationMember : MonoBehaviour {
     public float max_speed;
     public float rotational_speed;
 
+    public EmergentNode node;
 	
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        node.node = this.gameObject;
+        node.following = null;
 	}
 
     // Update is called once per frame
@@ -33,6 +36,12 @@ public class FormationMember : MonoBehaviour {
             rb.velocity.Normalize();
             rb.velocity *= max_speed;
         }
+    }
+
+    void Emerge()
+    {
+        //add behaviour here
+        //dest = 
     }
 
     //    //transform.position = dest;
