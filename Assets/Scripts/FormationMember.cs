@@ -7,6 +7,12 @@ public class FormationMember : MonoBehaviour {
 
     public Vector2 dest;
 
+    // variables for me trying to get things to avoid walls
+    public Transform head;
+    public float whisker_delta;
+    public float raycast_dist;
+    public float avoid_rot_speed;
+
     Rigidbody2D rb;
     public float acceleration;
     public float max_speed;
@@ -28,14 +34,98 @@ public class FormationMember : MonoBehaviour {
 
     private void Move()
     {
+        // old update behavior
         //transform.position = dest;
 
-        rb.AddForce(dest - rb.position);
-        if (rb.velocity.magnitude > max_speed)
+        //rb.AddForce(dest - rb.position);
+        //if (rb.velocity.magnitude > max_speed)
+        //{
+        //    rb.velocity.Normalize();
+        //    rb.velocity *= max_speed;
+        //}
+
+        // me trying to get things to rotate and avoid walls nicely
+        RaycastHit2D left_hit, right_hit;
+
+        left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist);
+        Debug.DrawLine(head.position, head.position + (transform.right + transform.up * whisker_delta) * raycast_dist, Color.red);
+
+        right_hit = Physics2D.Raycast(head.position, transform.right - transform.up * whisker_delta, raycast_dist);
+        Debug.DrawLine(head.position, head.position + (transform.right - transform.up * whisker_delta) * raycast_dist, Color.cyan);
+
+        if (left_hit || right_hit)
         {
-            rb.velocity.Normalize();
-            rb.velocity *= max_speed;
+            rotate_away(left_hit, right_hit);
         }
+        else
+        {
+            // try a second, longer raycast for turning?
+            RaycastHit2D long_left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist + 0.25f);
+            RaycastHit2D long_right_hit = Physics2D.Raycast(head.position, transform.right - transform.up * whisker_delta, raycast_dist + 0.25f);
+
+            if (!long_left_hit && !long_right_hit)
+            {
+                // rotate
+                Vector2 _direction = (dest - (Vector2)transform.position).normalized;
+                float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+
+                float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
+                //float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+            }
+
+
+            // accelerate
+            //rb.AddForce(transform.right * acceleration);
+            rb.AddForce((dest - (Vector2)transform.position) * acceleration); // add a force towards their dest, not just forward
+            if (rb.velocity.magnitude > max_speed)
+            {
+                rb.velocity = rb.velocity.normalized * max_speed;
+            }
+        }
+    }
+
+    void rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
+    {
+        //print("rotating away, left: " + left_hit.distance + " right : " + right_hit.distance);
+
+        if (!left_hit)
+        {
+            rot_left();
+            return;
+        }
+        if (!right_hit)
+        {
+            rot_right();
+            return;
+        }
+
+        if (left_hit.distance < right_hit.distance)
+        {
+            //rot_left();
+            rot_right();
+        }
+        else
+        {
+            //rot_right();
+            rot_left();
+        }
+    }
+
+    void rot_left()
+    {
+        //print("rot left");
+        Vector3 rot = transform.eulerAngles;
+        rot.z += Time.deltaTime * avoid_rot_speed;
+        transform.rotation = Quaternion.Euler(rot);
+    }
+
+    void rot_right()
+    {
+        //print("rot right");
+        Vector3 rot = transform.eulerAngles;
+        rot.z -= Time.deltaTime * avoid_rot_speed;
+        transform.rotation = Quaternion.Euler(rot);
     }
 
     void Emerge()

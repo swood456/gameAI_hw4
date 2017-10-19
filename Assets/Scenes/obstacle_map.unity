@@ -1802,7 +1802,7 @@ Prefab:
     - target: {fileID: 114748659991790934, guid: 24372ce5220a5134d905f943e5ea2e39,
         type: 2}
       propertyPath: raycast_dist
-      value: 0.8
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24372ce5220a5134d905f943e5ea2e39, type: 2}

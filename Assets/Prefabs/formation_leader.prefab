@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4946652990712360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 50577117186195898}
   - component: {fileID: 60478783607215396}
   - component: {fileID: 114748659991790934}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: formation_leader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
