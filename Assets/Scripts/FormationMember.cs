@@ -18,6 +18,7 @@ public class FormationMember : MonoBehaviour {
     public float max_speed;
     public float rotational_speed;
 
+    // info for Emergent formations
     public EmergentNode node;
 	
 	void Start () {
@@ -55,7 +56,7 @@ public class FormationMember : MonoBehaviour {
 
         if (left_hit || right_hit)
         {
-            rotate_away(left_hit, right_hit);
+            Rotate_away(left_hit, right_hit);
         }
         else
         {
@@ -85,34 +86,34 @@ public class FormationMember : MonoBehaviour {
         }
     }
 
-    void rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
+    void Rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
     {
         //print("rotating away, left: " + left_hit.distance + " right : " + right_hit.distance);
 
         if (!left_hit)
         {
-            rot_left();
+            Rot_left();
             return;
         }
         if (!right_hit)
         {
-            rot_right();
+            Rot_right();
             return;
         }
 
         if (left_hit.distance < right_hit.distance)
         {
             //rot_left();
-            rot_right();
+            Rot_right();
         }
         else
         {
             //rot_right();
-            rot_left();
+            Rot_left();
         }
     }
 
-    void rot_left()
+    void Rot_left()
     {
         //print("rot left");
         Vector3 rot = transform.eulerAngles;
@@ -120,18 +121,12 @@ public class FormationMember : MonoBehaviour {
         transform.rotation = Quaternion.Euler(rot);
     }
 
-    void rot_right()
+    void Rot_right()
     {
         //print("rot right");
         Vector3 rot = transform.eulerAngles;
         rot.z -= Time.deltaTime * avoid_rot_speed;
         transform.rotation = Quaternion.Euler(rot);
-    }
-
-    void Emerge()
-    {
-        //add behaviour here
-        //dest = 
     }
 
     //    //transform.position = dest;

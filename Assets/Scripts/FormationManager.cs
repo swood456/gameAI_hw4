@@ -17,36 +17,23 @@ public struct EmergentNode
 {
     public GameObject node;
     public GameObject following;
-    public bool right;
+    public GameObject follower;
 
-    public GameObject leftFollower;
-    public GameObject rightFollower;
-
-    public bool Full()
+    public bool Follow(GameObject f)
     {
-        return (leftFollower == null || rightFollower == null);
+        bool check = f.GetComponent<EmergentNode>().AddFollower(node);
+        if (check) { following = f; }
+        return check;
     }
 
-    public void Follow(GameObject f)
+    public bool AddFollower(GameObject f)
     {
-        int check = f.GetComponent<EmergentNode>().AddFollower(node);
-        if (check == 0) { right = true; following = f; }
-        else if (check == 1) { right = false; following = f; }
-    }
-
-    public int AddFollower(GameObject f)
-    {
-        if (rightFollower == null)
+        if (follower == null && f != following)
         {
-            rightFollower = f;
-            return 0;
+            follower = f;
+            return true;
         }
-        else if (leftFollower == null)
-        {
-            leftFollower = f;
-            return 1;
-        }
-        return 2;
+        return false;
     }
 }
 
@@ -67,7 +54,7 @@ public class FormationManager : MonoBehaviour {
             members.Add(child);
         }
         slots = new List<Slot>();
-        setup_members();
+        Setup_members();
     }
 
     private void Update()
@@ -80,39 +67,21 @@ public class FormationManager : MonoBehaviour {
                 mem.Set(lead);
             }
         }
+    }
+
+    void Setup_members()
+    {
+        if (!emergent)
+        {
+            Setup_circle(members.Count);
+        }
         else
         {
-            foreach (FormationMember f in members)
-            {
-                if (f.node.following == null)
-                {
-                    GameObject toFollow = null;
-                    float dist = Mathf.Infinity;
-
-                    foreach(GameObject m in GetComponentsInChildren<GameObject>())
-                    {
-                        EmergentNode n = m.GetComponent<EmergentNode>();
-                        if (m != f && n.Full() == false && Vector3.Distance(m.transform.position, f.transform.position) < dist) {
-                            dist = Vector3.Distance(m.transform.position, f.transform.position);
-                            toFollow = m;
-                        }
-                    }
-
-                    if (toFollow != null)
-                    {
-                        f.node.Follow(toFollow);
-                    }
-                }
-            }
+            AssignFollowers();
         }
     }
 
-    void setup_members()
-    {
-        setup_circle(members.Count);
-    }
-
-    void setup_circle(int num_members)
+    void Setup_circle(int num_members)
     {
         List<Vector2> member_pos = new List<Vector2>();
 
@@ -147,10 +116,10 @@ public class FormationManager : MonoBehaviour {
         //    leader.slowdown_leader(avg_dist / group_radius);
         //}
 
-        assignMembers(member_pos, mid);
+        AssignMembers(member_pos, mid);
     }
 
-    public void assignMembers(List<Vector2> s, Vector2 mid)
+    public void AssignMembers(List<Vector2> s, Vector2 mid)
     {
         foreach (FormationMember m in members)
         {
@@ -175,10 +144,63 @@ public class FormationManager : MonoBehaviour {
         }
     }
 
+    public void AssignFollowers()
+    {
+        List<GameObject> notFollowing = new List<GameObject>();
+        List<GameObject> notFollowed = new List<GameObject>();
+
+        if (leader.node.follower != null)
+        {
+            notFollowed.Add(leader.gameObject);
+        }
+
+        while (notFollowing.Count > 0)
+        {
+            foreach (FormationMember f in members)
+            {
+                EmergentNode e = f.node;
+                if (e.follower == null)
+                {
+                    notFollowing.Add(f.gameObject);
+                }
+                if (e.following == null)
+                {
+                    notFollowed.Add(f.gameObject);
+                }
+            }
+
+            foreach (GameObject x in notFollowing)
+            {
+                GameObject toFollow = null;
+                float dist = Mathf.Infinity;
+
+                foreach (GameObject y in notFollowed)
+                {
+                    float yDist = Vector3.Distance(x.transform.position, y.transform.position);
+                    if (yDist < dist)
+                    {
+                        dist = yDist;
+                        toFollow = y;
+                    }
+                }
+
+                if (toFollow != null)
+                {
+                    bool check = x.GetComponent<EmergentNode>().Follow(toFollow);
+                    if (check)
+                    {
+                        notFollowing.Remove(x);
+                        notFollowed.Remove(toFollow);
+                    }
+                }
+            }
+        }
+    }
+
     public void RemoveAgent(FormationMember f)
     {
         members.Remove(f);
-        setup_members();
+        Setup_members();
     }
 
 }

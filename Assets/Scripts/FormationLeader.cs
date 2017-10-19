@@ -11,6 +11,8 @@ public class FormationLeader : MonoBehaviour {
     public float rotational_speed;
     public float avoid_rot_speed;
 
+    public EmergentNode node;
+
     public Transform head;
     public float raycast_dist;
     public float whisker_delta;
