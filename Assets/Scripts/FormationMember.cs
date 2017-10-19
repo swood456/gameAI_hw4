@@ -25,11 +25,18 @@ public class FormationMember : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         node.node = this.gameObject;
         node.following = null;
+        node.follower = null;
 	}
 
     // Update is called once per frame
     void Update()
     {
+        if (node.following != null)
+        {
+            //print("I'm following " + node.following);
+            dest = node.following.transform.position;
+        }
+
         Move();
     }
 

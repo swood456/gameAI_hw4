@@ -24,6 +24,8 @@ public class FormationLeader : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         cur_max_speed = max_speed;
 
+        node.node = this.gameObject;
+        node.follower = null;
     }
 	
 	// Update is called once per frame
