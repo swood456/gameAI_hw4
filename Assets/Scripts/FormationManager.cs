@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,22 +20,50 @@ public struct EmergentNode
     public GameObject following;
     public GameObject follower;
 
-    public bool Follow(GameObject f)
+    //follow the node e, fails this node is already following another
+    public bool Follow(EmergentNode e)
     {
-        bool check = f.GetComponent<EmergentNode>().AddFollower(node);
-        if (check) { following = f; }
+        //do not follow self
+        if (e.Equals(this) || following != null)
+        {
+            return false;
+        }
+        else if (e.node == following)
+        {
+            return true;
+        }
+        bool check = e.AddFollower(this);
+        if (check) {
+            following = e.node;
+        }
         return check;
     }
 
-    public bool AddFollower(GameObject f)
+    public void StopFollowing()
     {
-        if (follower == null && f != following)
+        following = null;
+    }
+
+    public bool AddFollower(EmergentNode e)
+    {
+        //do not follow self
+        if (e.Equals(this))
         {
-            follower = f;
+            return false;
+        }
+        if (follower == null)
+        {
+            follower = e.node;
             return true;
         }
         return false;
     }
+
+    public void RemoveFollower()
+    {
+        follower = null;
+    }
+
 }
 
 public class FormationManager : MonoBehaviour {
@@ -43,11 +72,12 @@ public class FormationManager : MonoBehaviour {
     public FormationLeader leader;
     public List<FormationMember> members;
     public List<Slot> slots;
-    bool emergent = false;
+    public bool emergent = false;
+    List<GameObject> notFollowed = new List<GameObject>();
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         leader = GetComponentInChildren<FormationLeader>();
         foreach (FormationMember child in GetComponentsInChildren<FormationMember>())
         {
@@ -65,6 +95,48 @@ public class FormationManager : MonoBehaviour {
             foreach (Slot mem in slots)
             {
                 mem.Set(lead);
+            }
+        }
+        else
+        {
+            //update to follow the closest free flock member
+            foreach (FormationMember m in members)
+            {
+                GameObject toFollow = null;
+                float dist;
+                if (m.node.following != null)
+                {
+                    dist = Vector3.Distance(m.node.following.transform.position, m.transform.position);
+                }
+                else
+                {
+                    toFollow = null;
+                    dist = Mathf.Infinity;
+                }
+                
+                foreach(GameObject g in notFollowed)
+                {
+                    float newDist = Vector3.Distance(g.transform.position, m.transform.position);
+                    if (newDist < dist)
+                    {
+                        dist = newDist;
+                        toFollow = g;
+                    }
+                }
+
+                if (toFollow != null)
+                {
+                    if (m.node.following != null)
+                    {
+                        notFollowed.Add(m.node.following);
+                        GetE(m.node.following).RemoveFollower();
+                    }
+                    
+                    m.node.StopFollowing();
+
+                    notFollowed.Remove(toFollow);
+                    m.node.Follow(GetE(toFollow));
+                }
             }
         }
     }
@@ -147,60 +219,71 @@ public class FormationManager : MonoBehaviour {
     public void AssignFollowers()
     {
         List<GameObject> notFollowing = new List<GameObject>();
-        List<GameObject> notFollowed = new List<GameObject>();
+        notFollowed = new List<GameObject>();
 
-        if (leader.node.follower != null)
+        leader.node.follower = null;
+        notFollowed.Add(leader.gameObject);
+        
+        foreach (FormationMember f in members)
         {
-            notFollowed.Add(leader.gameObject);
+            EmergentNode e = f.node;
+            e.StopFollowing();
+            notFollowing.Add(f.gameObject);
+
+            e.RemoveFollower();
+            notFollowed.Add(f.gameObject);
         }
+        print(notFollowing.Count);
 
         while (notFollowing.Count > 0)
         {
-            foreach (FormationMember f in members)
-            {
-                EmergentNode e = f.node;
-                if (e.follower == null)
-                {
-                    notFollowing.Add(f.gameObject);
-                }
-                if (e.following == null)
-                {
-                    notFollowed.Add(f.gameObject);
-                }
-            }
+            GameObject x = notFollowing.First<GameObject>();
 
-            foreach (GameObject x in notFollowing)
+            GameObject toFollow = null;
+            float dist = Mathf.Infinity;
+            foreach (GameObject y in notFollowed)
             {
-                GameObject toFollow = null;
-                float dist = Mathf.Infinity;
-
-                foreach (GameObject y in notFollowed)
+                if (x != y)
                 {
                     float yDist = Vector3.Distance(x.transform.position, y.transform.position);
                     if (yDist < dist)
                     {
-                        dist = yDist;
-                        toFollow = y;
-                    }
-                }
-
-                if (toFollow != null)
-                {
-                    bool check = x.GetComponent<EmergentNode>().Follow(toFollow);
-                    if (check)
-                    {
-                        notFollowing.Remove(x);
-                        notFollowed.Remove(toFollow);
+                       dist = yDist;
+                       toFollow = y;
                     }
                 }
             }
+            if (toFollow != null)
+            {
+                print(x + " wants to follow " + toFollow);
+                EmergentNode e = GetE(toFollow);
+                if (GetE(x).Follow(e))
+                {
+                    print("Success!");
+                    notFollowing.Remove(x);
+                    notFollowed.Remove(toFollow);
+                }
+            }
         }
+        print("all followers have been assigned");
     }
 
     public void RemoveAgent(FormationMember f)
     {
         members.Remove(f);
         Setup_members();
+    }
+
+    public EmergentNode GetE(GameObject g)
+    {
+        if (g == leader.gameObject)
+        {
+            return g.GetComponent<FormationLeader>().node;
+        }
+        else
+        {
+            return g.GetComponent<FormationMember>().node;
+        }
     }
 
 }

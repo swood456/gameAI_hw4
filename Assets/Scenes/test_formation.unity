@@ -306,6 +306,7 @@ MonoBehaviour:
   group_scalar: 3
   leader: {fileID: 0}
   members: []
+  emergent: 1
 --- !u!4 &1004607255
 Transform:
   m_ObjectHideFlags: 0
