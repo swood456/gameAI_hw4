@@ -139,7 +139,7 @@ MonoBehaviour:
   raycast_dist: 0.75
   avoid_rot_speed: 40
   acceleration: 0.5
-  max_speed: 0.75
+  max_speed: 1.25
   rotational_speed: 1.5
 --- !u!212 &212407897365909116
 SpriteRenderer:

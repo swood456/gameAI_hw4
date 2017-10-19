@@ -57,6 +57,11 @@ public class FormationMember : MonoBehaviour {
         if (left_hit || right_hit)
         {
             Rotate_away(left_hit, right_hit);
+            print(name + " has hit the wall");
+            //rb.velocity = max_speed * transform.up;
+            rb.velocity = rb.velocity.magnitude * transform.right;
+            //rb.AddForce
+            //rb.AddForce(transform.right * acceleration);
         }
         else
         {
@@ -81,7 +86,9 @@ public class FormationMember : MonoBehaviour {
             rb.AddForce((dest - (Vector2)transform.position) * acceleration); // add a force towards their dest, not just forward
             if (rb.velocity.magnitude > max_speed)
             {
-                rb.velocity = rb.velocity.normalized * max_speed;
+                //rb.velocity = rb.velocity.normalized * max_speed;
+                rb.velocity = transform.forward * max_speed;
+                //print(name + " is hitting max speed");
             }
         }
     }
