@@ -57,7 +57,7 @@ public class FormationMember : MonoBehaviour {
         if (left_hit || right_hit)
         {
             Rotate_away(left_hit, right_hit);
-            print(name + " has hit the wall");
+            //print(name + " has hit the wall");
             //rb.velocity = max_speed * transform.up;
             rb.velocity = rb.velocity.magnitude * transform.right;
             //rb.AddForce
