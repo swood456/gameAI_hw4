@@ -56,6 +56,7 @@ public class FormationMember : MonoBehaviour {
             //rb.velocity = rb.velocity.magnitude * transform.right;
         }
         else
+        //if(true)
         {            
             RaycastHit2D long_left_hit = Physics2D.Raycast(head.position, transform.up, whisker_delta);
             Debug.DrawLine(head.position, head.position + (transform.up) * whisker_delta, Color.gray);
@@ -183,7 +184,7 @@ public class FormationMember : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("collision start!");
+        //print("collision start!");
         if (collision.gameObject.GetComponent<BlackBird>())
         {
             FormationManager f_manager = FindObjectOfType<FormationManager>();
