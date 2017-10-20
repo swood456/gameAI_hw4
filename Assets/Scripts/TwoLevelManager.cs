@@ -35,12 +35,16 @@ public class TwoLevelManager : MonoBehaviour {
                 center_target = center_target.next_target;
         }
 
+        int num_far_count = members.Count;
         for(int i = 0; i < members.Count; ++i)
         {
             members[i].dest = fake_leader + member_leader_delta[i];
+            if (Vector2.Distance(members[i].transform.position, members[i].dest) > 0.5f)
+                num_far_count--;
         }
-
-        fake_leader += movespeed * ((Vector2)center_target.transform.position - fake_leader).normalized * Time.deltaTime;
+        //print(num_far_count);
+        fake_leader += movespeed  * (float)num_far_count / members.Count * ((Vector2)center_target.transform.position - fake_leader).normalized * Time.deltaTime;
+        //fake_leader += movespeed * ((Vector2)center_target.transform.position - fake_leader).normalized * Time.deltaTime;
     }
     void Setup_members(bool first_time)
     {

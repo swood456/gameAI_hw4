@@ -70,7 +70,7 @@ public class FormationMember : MonoBehaviour {
             float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
             if(lerp_angle > 0)
             {
-                print("rot left");
+                //print("rot left");
                 if (!long_right_hit)
                 {
                     transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
@@ -82,7 +82,7 @@ public class FormationMember : MonoBehaviour {
             }
             else
             {
-                print("rot right");
+                //print("rot right");
                 if (!long_left_hit)
                 {
                     transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
@@ -97,7 +97,8 @@ public class FormationMember : MonoBehaviour {
         }
 
         // accelerate
-        rb.AddForce(transform.right * acceleration);
+        if(Vector2.Distance(transform.position, dest) > 0.5f)
+            rb.AddForce(transform.right * acceleration);
         //rb.AddForce((dest - (Vector2)transform.position) * acceleration); // add a force towards their dest, not just forward
         if (rb.velocity.magnitude > max_speed)
         {
