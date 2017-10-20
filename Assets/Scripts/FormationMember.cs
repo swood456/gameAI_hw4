@@ -173,14 +173,14 @@ public class FormationMember : MonoBehaviour {
     //    }
     //}
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    print("collision start!");
-    //    if(collision.gameObject.GetComponent<BlackBird>())
-    //    {
-    //        FormationManager f_manager = FindObjectOfType<FormationManager>();
-    //        f_manager.RemoveAgent(this);
-    //        Destroy(this.gameObject);
-    //    }
-    //}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("collision start!");
+        if (collision.gameObject.GetComponent<BlackBird>())
+        {
+            FormationManager f_manager = FindObjectOfType<FormationManager>();
+            f_manager.RemoveAgent(this);
+            Destroy(this.gameObject);
+        }
+    }
 }
