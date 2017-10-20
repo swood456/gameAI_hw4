@@ -42,17 +42,6 @@ public class FormationMember : MonoBehaviour {
 
     private void Move()
     {
-        // old update behavior
-        //transform.position = dest;
-
-        //rb.AddForce(dest - rb.position);
-        //if (rb.velocity.magnitude > max_speed)
-        //{
-        //    rb.velocity.Normalize();
-        //    rb.velocity *= max_speed;
-        //}
-
-        // me trying to get things to rotate and avoid walls nicely
         RaycastHit2D left_hit, right_hit;
 
         left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist);
@@ -64,39 +53,44 @@ public class FormationMember : MonoBehaviour {
         if (left_hit || right_hit)
         {
             Rotate_away(left_hit, right_hit);
-            //print(name + " has hit the wall");
-            //rb.velocity = max_speed * transform.up;
             rb.velocity = rb.velocity.magnitude * transform.right;
-            //rb.AddForce
-            //rb.AddForce(transform.right * acceleration);
         }
         else
+        {            
+            RaycastHit2D long_left_hit = Physics2D.Raycast(head.position, transform.up, whisker_delta);
+            Debug.DrawLine(head.position, head.position + (transform.up) * whisker_delta, Color.gray);
+
+            RaycastHit2D long_right_hit = Physics2D.Raycast(head.position, -transform.up, whisker_delta);
+            Debug.DrawLine(head.position, head.position + (-transform.up) * whisker_delta, Color.gray);
+            
+            // rotate
+            Vector2 _direction = (dest - (Vector2)transform.position).normalized;
+            float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+
+            float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
+            if(lerp_angle > 0)
+            {
+                print("rot left");
+                if(!long_right_hit)
+                    transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+            }
+            else
+            {
+                print("rot right");
+                if (!long_left_hit)
+                    transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+            }
+            
+        }
+
+        // accelerate
+        rb.AddForce(transform.right * acceleration);
+        //rb.AddForce((dest - (Vector2)transform.position) * acceleration); // add a force towards their dest, not just forward
+        if (rb.velocity.magnitude > max_speed)
         {
-            // try a second, longer raycast for turning?
-            RaycastHit2D long_left_hit = Physics2D.Raycast(head.position, transform.right + transform.up * whisker_delta, raycast_dist + 0.25f);
-            RaycastHit2D long_right_hit = Physics2D.Raycast(head.position, transform.right - transform.up * whisker_delta, raycast_dist + 0.25f);
-
-            if (!long_left_hit && !long_right_hit)
-            {
-                // rotate
-                Vector2 _direction = (dest - (Vector2)transform.position).normalized;
-                float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
-
-                float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * rotational_speed);
-                //float lerp_angle = Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime);
-                transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
-            }
-
-
-            // accelerate
-            //rb.AddForce(transform.right * acceleration);
-            rb.AddForce((dest - (Vector2)transform.position) * acceleration); // add a force towards their dest, not just forward
-            if (rb.velocity.magnitude > max_speed)
-            {
-                //rb.velocity = rb.velocity.normalized * max_speed;
-                rb.velocity = transform.forward * max_speed;
-                //print(name + " is hitting max speed");
-            }
+            //rb.velocity = rb.velocity.normalized * max_speed;
+            rb.velocity = transform.forward * max_speed;
+            //print(name + " is hitting max speed");
         }
     }
 
