@@ -117,11 +117,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.11
+      value: -2.63
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.78
+      value: -5.29
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -615,8 +615,8 @@ GameObject:
   - component: {fileID: 329951102}
   - component: {fileID: 329951105}
   - component: {fileID: 329951104}
-  - component: {fileID: 329951106}
   - component: {fileID: 329951103}
+  - component: {fileID: 329951106}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -690,7 +690,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: obstacle_map_emergent
+          m_StringArgument: obstacle_map
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -987,7 +987,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Formation: Scalable'
+  m_Text: 'Formation: Emergent'
 --- !u!222 &393501693
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1415,7 +1415,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Emergent
+  m_Text: Scalable
 --- !u!222 &716672594
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1916,11 +1916,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.87
+      value: 3.35
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -7.1
+      value: -6.609999
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2091,11 +2091,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.87
+      value: 4.19
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.49
+      value: -2.9199998
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2378,11 +2378,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.76
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -7.89
+      value: -7.399999
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2648,11 +2648,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.95
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -7.33
+      value: -6.839999
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2829,7 +2829,7 @@ MonoBehaviour:
   group_scalar: 4
   leader: {fileID: 0}
   members: []
-  emergent: 0
+  emergent: 1
 --- !u!4 &1673939217
 Transform:
   m_ObjectHideFlags: 0
@@ -2864,11 +2864,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.35
+      value: -0.33
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.76
+      value: -1.19
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3026,11 +3026,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.97
+      value: 2.2900002
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.55
+      value: -1.9799998
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3304,11 +3304,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.14
+      value: 4.62
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.69
+      value: -5.1999993
       objectReference: {fileID: 0}
     - target: {fileID: 4967268793421760, guid: db86ab6ca17756340bea06cffcada18d, type: 2}
       propertyPath: m_LocalPosition.z
