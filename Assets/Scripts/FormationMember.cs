@@ -53,7 +53,7 @@ public class FormationMember : MonoBehaviour {
         if (left_hit || right_hit)
         {
             Rotate_away(left_hit, right_hit);
-            rb.velocity = rb.velocity.magnitude * transform.right;
+            //rb.velocity = rb.velocity.magnitude * transform.right;
         }
         else
         {            
@@ -71,14 +71,27 @@ public class FormationMember : MonoBehaviour {
             if(lerp_angle > 0)
             {
                 print("rot left");
-                if(!long_right_hit)
+                if (!long_right_hit)
+                {
                     transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+                }
+                else
+                {
+                    rb.AddForce(transform.up * acceleration);
+                }
             }
             else
             {
                 print("rot right");
                 if (!long_left_hit)
+                {
                     transform.rotation = Quaternion.Euler(0f, 0f, lerp_angle);
+                }
+                else
+                {
+                    rb.AddForce(-transform.up * acceleration);
+                }
+                    
             }
             
         }
