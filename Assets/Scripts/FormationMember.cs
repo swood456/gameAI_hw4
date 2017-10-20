@@ -186,7 +186,18 @@ public class FormationMember : MonoBehaviour {
         if (collision.gameObject.GetComponent<BlackBird>())
         {
             FormationManager f_manager = FindObjectOfType<FormationManager>();
-            f_manager.RemoveAgent(this);
+            if (f_manager)
+            {
+                f_manager.RemoveAgent(this);
+            }
+            else
+            {
+                TwoLevelManager tlm = FindObjectOfType<TwoLevelManager>();
+                if(tlm)
+                {
+                    tlm.RemoveAgent(this);
+                }
+            }
             Destroy(this.gameObject);
         }
     }
