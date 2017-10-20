@@ -2452,7 +2452,7 @@ MonoBehaviour:
   group_scalar: 4
   leader: {fileID: 0}
   members: []
-  emergent: 1
+  emergent: 0
 --- !u!4 &1673939217
 Transform:
   m_ObjectHideFlags: 0
