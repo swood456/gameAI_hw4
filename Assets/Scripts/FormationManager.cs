@@ -48,7 +48,7 @@ public class FormationManager : MonoBehaviour {
         else
         {
             //update to follow the closest free flock member
-            print("new loop! there are " + notFollowed.Count + " in notFollowed and " + notFollowing.Count + "in notFollowing");
+            //print("new loop! there are " + notFollowed.Count + " in notFollowed and " + notFollowing.Count + "in notFollowing");
             foreach (FormationMember m in members)
             {
                 FollowClosest(m);
@@ -135,22 +135,20 @@ public class FormationManager : MonoBehaviour {
     {
         ResetFollow();
         print(notFollowing.Count);
-        int size = notFollowing.Count;
         int ittCheck = 0; //prevents infinite loop if something goes wrong
-        while (notFollowing.Count > 0 && ittCheck < size)
+        while (notFollowing.Count > 0 && ittCheck < 50)
         {
             foreach (FormationMember m in members)
             {    
                 if (notFollowing.Contains(m))
                 {
-                    print(m + " is in notFollowing");
+                    //print(m + " is in notFollowing");
                     FollowClosest(m);
                 }
             }
-            ittCheck++;
-            
+            ittCheck++;   
         }
-        
+
     }
 
     public void RemoveAgent(FormationMember f)
@@ -173,6 +171,7 @@ public class FormationManager : MonoBehaviour {
     //}
 
     //Clear notFollowing and notFollowed, update all emergent Nodes
+
     private void ResetFollow()
     {
         notFollowing.Clear();
@@ -180,7 +179,7 @@ public class FormationManager : MonoBehaviour {
 
         notFollowed.Add(leader);
 
-        foreach (FormationMember f in members)
+        foreach (FormationBase f in members)
         {
             Unfollow(f);
             if (f.follower == null)
@@ -196,8 +195,7 @@ public class FormationManager : MonoBehaviour {
         if (g.following != null)
         {
             g.following.follower = null;
-            notFollowed.Add(g.following);
-            
+            notFollowed.Add(g.following);  
         }
 
         g.following = null;
@@ -214,7 +212,8 @@ public class FormationManager : MonoBehaviour {
         {
             Unfollow(follower);
             follower.following = toFollow;
-            print(follower + " is following " + toFollow);
+            toFollow.follower = follower;
+            //print(follower + " is following " + toFollow);
             notFollowed.Remove(toFollow);
             notFollowing.Remove(follower);
         }
@@ -234,7 +233,7 @@ public class FormationManager : MonoBehaviour {
          
         foreach (FormationBase nf in notFollowed)
         {
-            if (m != nf)
+            if (m != nf && !FollowLoop(m, nf))
             {
                 float dist = Vector3.Distance(m.transform.position, nf.transform.position);
                 if (dist < closest)
@@ -245,11 +244,29 @@ public class FormationManager : MonoBehaviour {
             }
         }
 
+        //print(m + " wants to follow " + toFollow);
         if (toFollow != null && toFollow != m.following)
         {
             FollowNode(m, toFollow.GetComponent<FormationBase>());
         }
 
         return toFollow;
+    }
+
+    private bool FollowLoop(FormationBase a, FormationBase b)
+    {
+        HashSet<FormationBase> chain = new HashSet<FormationBase>();
+        chain.Add(a);
+        FormationBase check = b;
+        while (check != null)
+        {
+            if (chain.Contains(check))
+            {
+                return true;
+            }
+            chain.Add(check);
+            check = check.following;
+        }
+        return false;
     }
 }

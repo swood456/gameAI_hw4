@@ -71,7 +71,7 @@ public class FormationBase : MonoBehaviour
     public float whisker_delta;
 
     public FormationBase following = null;
-    public FormationMember follower = null;
+    public FormationBase follower = null;
 
     // Use this for initialization
     public virtual void Start()
