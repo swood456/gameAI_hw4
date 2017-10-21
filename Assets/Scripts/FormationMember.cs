@@ -2,39 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FormationMember : MonoBehaviour {
+public class FormationMember : FormationBase {
 
 
     public Vector2 dest;
 
     // variables for me trying to get things to avoid walls
-    public Transform head;
-    public float whisker_delta;
-    public float raycast_dist;
-    public float avoid_rot_speed;
+    //public Transform head;
+    //public float whisker_delta;
+    //public float raycast_dist;
+    //public float avoid_rot_speed;
 
-    Rigidbody2D rb;
-    public float acceleration;
-    public float max_speed;
-    public float rotational_speed;
-
-    // info for Emergent formations
-    public EmergentNode node;
+    //Rigidbody2D rb;
+    //public float acceleration;
+    //public float max_speed;
+    //public float rotational_speed;
 	
-	void Start () {
-        rb = GetComponent<Rigidbody2D>();
-        node.node = this.gameObject;
-        node.following = null;
-        node.follower = null;
-	}
+	//void Start () {
+        //rb = GetComponent<Rigidbody2D>();
+        //node.node = this.gameObject;
+        //node.following = null;
+        //node.follower = null;
+	//}
 
     // Update is called once per frame
     void Update()
     {
-        if (node.following != null)
+        if (following != null)
         {
             //print("I'm following " + node.following);
-            dest = node.following.transform.position;
+            dest = following.transform.position - following.transform.right;
         }
 
         Move();

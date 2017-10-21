@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FormationLeader : MonoBehaviour {
+public class FormationLeader : FormationBase {
 
     public DestTrigger cur_dest;
-    public float max_speed;
+    //public float max_speed;
     public float cur_max_speed;
-    public float acceleration;
-    public float rotational_speed;
-    public float avoid_rot_speed;
+    //public float acceleration;
+    //public float rotational_speed;
+    //public float avoid_rot_speed;
 
-    public EmergentNode node;
+    //public Transform head;
+    //public float raycast_dist;
+    //public float whisker_delta;
 
-    public Transform head;
-    public float raycast_dist;
-    public float whisker_delta;
+    //Rigidbody2D rb;
 
-    Rigidbody2D rb;
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    public override void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         cur_max_speed = max_speed;
-
-        node.node = this.gameObject;
-        node.follower = null;
     }
 	
 	// Update is called once per frame
@@ -42,7 +38,7 @@ public class FormationLeader : MonoBehaviour {
         
         if (left_hit || right_hit)
         {
-            rotate_away(left_hit, right_hit);
+            Rotate_away(left_hit, right_hit);
         }
         else
         {
@@ -72,40 +68,40 @@ public class FormationLeader : MonoBehaviour {
         
 	}
 
-    public void slowdown_leader(float mult)
+    public void Slowdown_leader(float mult)
     {
         cur_max_speed = max_speed * mult;
     }
 
 
-    void rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
+    void Rotate_away(RaycastHit2D left_hit, RaycastHit2D right_hit)
     {
         //print("rotating away, left: " + left_hit.distance + " right : " + right_hit.distance);
 
         if (!left_hit)
         {
-            rot_left();
+            Rot_left();
             return;
         }
         if(!right_hit)
         {
-            rot_right();
+            Rot_right();
             return;
         }
 
         if(left_hit.distance < right_hit.distance)
         {
             //rot_left();
-            rot_right();
+            Rot_right();
         }
         else
         {
             //rot_right();
-            rot_left();
+            Rot_left();
         }
     }
     
-    void rot_left()
+    void Rot_left()
     {
         //print("rot left");
         Vector3 rot = transform.eulerAngles;
@@ -113,7 +109,7 @@ public class FormationLeader : MonoBehaviour {
         transform.rotation = Quaternion.Euler(rot);
     }
 
-    void rot_right()
+    void Rot_right()
     {
         //print("rot right");
         Vector3 rot = transform.eulerAngles;
